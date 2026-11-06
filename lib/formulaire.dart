@@ -59,29 +59,52 @@ class _FormulaireScreenState extends State<FormulaireScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const Text('Remplis les informations du rendu.',
+                      style: TextStyle(color: gris)),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: titre,
+                    textInputAction: TextInputAction.next,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration: const InputDecoration(
-                        labelText: 'Titre', border: OutlineInputBorder()),
+                      labelText: 'Titre',
+                      hintText: 'Ex. TP Flutter',
+                      prefixIcon: Icon(Icons.edit_outlined),
+                    ),
                     validator: obligatoire,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: matiere,
+                    textInputAction: TextInputAction.done,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration: const InputDecoration(
-                        labelText: 'Matière', border: OutlineInputBorder()),
+                      labelText: 'Matière',
+                      hintText: 'Ex. Développement mobile',
+                      prefixIcon: Icon(Icons.menu_book_outlined),
+                    ),
                     validator: obligatoire,
                   ),
                   const SizedBox(height: 16),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.calendar_today, color: rouge),
-                    title: Text('Date : ${formatDate.format(date)}'),
-                    trailing:
-                        TextButton(onPressed: choisirDate, child: const Text('Changer')),
+                  // Champ date cliquable, même style que les autres champs
+                  InkWell(
+                    onTap: choisirDate,
+                    borderRadius: BorderRadius.circular(16),
+                    child: InputDecorator(
+                      decoration: const InputDecoration(
+                        labelText: 'Date limite',
+                        prefixIcon: Icon(Icons.calendar_today_outlined, color: rouge),
+                        suffixIcon: Icon(Icons.arrow_drop_down),
+                      ),
+                      child: Text(formatDate.format(date)),
+                    ),
                   ),
-                  const SizedBox(height: 24),
-                  FilledButton(onPressed: enregistrer, child: const Text('Enregistrer')),
+                  const SizedBox(height: 32),
+                  FilledButton.icon(
+                    onPressed: enregistrer,
+                    icon: const Icon(Icons.save_outlined),
+                    label: const Text('Enregistrer'),
+                  ),
                 ],
               ),
             ),
